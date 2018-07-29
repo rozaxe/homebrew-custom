@@ -81,20 +81,6 @@ diff --git a/configure.ac b/configure.ac
 index 5ee63a693..ae790d9fb 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -344,11 +344,11 @@ CAIRO_ENABLE_FUNCTIONS(png, PNG, yes, [
-     use_png=yes
-   fi
-
--  if test "x$use_png" = "xyes" ; then
-+  if test "x$use_png" = "xyes" ; then
-     PKG_CHECK_MODULES(png, $png_REQUIRES, , : )
-   else
-     AC_MSG_WARN([Could not find libpng in the pkg-config search path])
--  fi
-+  fi
- ])
-
- dnl ===========================================================================
 @@ -356,7 +356,7 @@ CAIRO_ENABLE_SURFACE_BACKEND(gl, OpenGL, no, [
    gl_REQUIRES="gl"
    PKG_CHECK_MODULES(gl, $gl_REQUIRES,, [
@@ -104,20 +90,6 @@ index 5ee63a693..ae790d9fb 100644
  	  if test "x$use_gl" = "xyes"; then
  	      gl_NONPKGCONFIG_CFLAGS=
  	      gl_NONPKGCONFIG_LIBS="-lGL"
-@@ -536,11 +536,11 @@ CAIRO_ENABLE_FONT_BACKEND(ft, FreeType, auto, [
-     PKG_CHECK_MODULES(FREETYPE, freetype2 >= $FREETYPE_MIN_VERSION,
-                       [freetype_pkgconfig=yes],
- 		      [freetype_pkgconfig=no])
--
-+
-     if test "x$freetype_pkgconfig" = "xyes"; then
-       ft_REQUIRES="freetype2 >= $FREETYPE_MIN_VERSION $ft_REQUIRES"
-     else
--
-+
-       if test -z "$FREETYPE_CONFIG"; then
-         AC_PATH_PROG(FREETYPE_CONFIG, freetype-config, no)
-       fi
 diff --git a/src/cairo-gl-private.h b/src/cairo-gl-private.h
 index f02a58763..85a1e0512 100644
 --- a/src/cairo-gl-private.h
