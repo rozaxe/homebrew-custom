@@ -21,10 +21,8 @@ class Cairo < Formula
   def install
 
     # Patch OpenGL header for macOS
-    stable do
-      patch :DATA
-      patch :p0, :DATA
-    end
+    patch :DATA
+    patch :p0, :DATA
 
     if build.head?
       ENV["NOCONFIGURE"] = "1"
