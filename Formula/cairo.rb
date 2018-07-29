@@ -18,13 +18,7 @@ class Cairo < Formula
   depends_on "pixman"
   depends_on "glib"
 
-  patch do
-    url "https://example.com/example_patch.diff"
-    sha1 "deadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
-  end
-
   # Patch OpenGL header for macOS
-  opoo "dsjkfhskdhf"
   patch :p0, %{
 diff --git a/src/cairo-gl-private.h b/src/cairo-gl-private.h
 index f02a58763..85a1e0512 100644
