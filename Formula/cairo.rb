@@ -18,13 +18,14 @@ class Cairo < Formula
   depends_on "pixman"
   depends_on "glib"
 
-  # Patch OpenGL header for macOS
-  stable do
-    patch :DATA
-    patch :p0, :DATA
-  end
-
   def install
+
+    # Patch OpenGL header for macOS
+    stable do
+      patch :DATA
+      patch :p0, :DATA
+    end
+
     if build.head?
       ENV["NOCONFIGURE"] = "1"
       system "./autogen.sh"
