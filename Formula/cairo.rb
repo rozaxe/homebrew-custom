@@ -80,8 +80,6 @@ class Cairo < Formula
 end
 
 __END__
-diff --git a/configure.ac b/configure.ac
-index 5ee63a693..ae790d9fb 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -356,7 +356,7 @@ CAIRO_ENABLE_SURFACE_BACKEND(gl, OpenGL, no, [
@@ -93,8 +91,6 @@ index 5ee63a693..ae790d9fb 100644
  	  if test "x$use_gl" = "xyes"; then
  	      gl_NONPKGCONFIG_CFLAGS=
  	      gl_NONPKGCONFIG_LIBS="-lGL"
-diff --git a/src/cairo-gl-private.h b/src/cairo-gl-private.h
-index f02a58763..85a1e0512 100644
 --- a/src/cairo-gl-private.h
 +++ b/src/cairo-gl-private.h
 @@ -67,8 +67,8 @@
