@@ -3,11 +3,7 @@ class Cairo < Formula
   homepage "https://cairographics.org/"
 
   stable do
-    url "https://www.cairographics.org/snapshots/cairo-1.15.12.tar.xz"
-    sha256 "7623081b94548a47ee6839a7312af34e9322997806948b6eec421a8c6d0594c9"
-
-	patch :DATA
-	patch :p0, :DATA
+	url "https://github.com/rozaxe/cairo.git", :using => :git
   end
 
   depends_on "pkg-config" => :build
@@ -70,62 +66,4 @@ class Cairo < Formula
     system "./test"
   end
 end
-
-__END__
-diff --git a/configure.ac b/configure.ac
-index 59d87eb..0170b69 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -344,11 +344,11 @@ CAIRO_ENABLE_FUNCTIONS(png, PNG, yes, [
-     use_png=yes
-   fi
-
--  if test "x$use_png" = "xyes" ; then
-+  if test "x$use_png" = "xyes" ; then
-     PKG_CHECK_MODULES(png, $png_REQUIRES, , : )
-   else
-     AC_MSG_WARN([Could not find libpng in the pkg-config search path])
--  fi
-+  fi
- ])
-
- dnl ===========================================================================
-@@ -356,7 +356,7 @@ CAIRO_ENABLE_SURFACE_BACKEND(gl, OpenGL, no, [
-   gl_REQUIRES="gl"
-   PKG_CHECK_MODULES(gl, $gl_REQUIRES,, [
- 	  dnl Fallback to searching for headers
--	  AC_CHECK_HEADER(GL/gl.h,, [use_gl="no (gl.pc nor OpenGL headers not found)"])
-+	  AC_CHECK_HEADER(OpenGL/gl.h,, [use_gl="no (gl.pc nor OpenGL headers not found)"])
- 	  if test "x$use_gl" = "xyes"; then
- 	      gl_NONPKGCONFIG_CFLAGS=
- 	      gl_NONPKGCONFIG_LIBS="-lGL"
-@@ -533,11 +533,11 @@ CAIRO_ENABLE_FONT_BACKEND(ft, FreeType, auto, [
-     PKG_CHECK_MODULES(FREETYPE, freetype2 >= $FREETYPE_MIN_VERSION,
-                       [freetype_pkgconfig=yes],
- 		      [freetype_pkgconfig=no])
--
-+
-     if test "x$freetype_pkgconfig" = "xyes"; then
-       ft_REQUIRES="freetype2 >= $FREETYPE_MIN_VERSION $ft_REQUIRES"
-     else
--
-+
-       if test -z "$FREETYPE_CONFIG"; then
-         AC_PATH_PROG(FREETYPE_CONFIG, freetype-config, no)
-       fi
-diff --git a/src/cairo-gl-private.h b/src/cairo-gl-private.h
-index f02a587..85a1e05 100644
---- a/src/cairo-gl-private.h
-+++ b/src/cairo-gl-private.h
-@@ -67,8 +67,8 @@
- #include <GLES2/gl2.h>
- #include <GLES2/gl2ext.h>
- #elif CAIRO_HAS_GL_SURFACE
--#include <GL/gl.h>
--#include <GL/glext.h>
-+#include <OpenGL/gl.h>
-+#include <OpenGL/glext.h>
- #endif
-
- #include "cairo-gl-ext-def-private.h"
 
