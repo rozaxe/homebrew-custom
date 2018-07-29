@@ -9,9 +9,19 @@ class Cairo < Formula
     depends_on "automake" => :build
     depends_on "autoconf" => :build
     depends_on "libtool" => :build
+  end
 
-	# Patch OpenGL header for macOS
-	patch :p0, <<-EOS.undent
+  depends_on "pkg-config" => :build
+  depends_on "freetype"
+  depends_on "fontconfig"
+  depends_on "libpng"
+  depends_on "pixman"
+  depends_on "glib"
+
+  def install
+	head do
+		# Patch OpenGL header for macOS
+		patch :p0, <<-EOS.undent
 diff --git a/src/cairo-gl-private.h b/src/cairo-gl-private.h
 index f02a58763..85a1e0512 100644
 --- a/src/cairo-gl-private.h
@@ -27,9 +37,9 @@ index f02a58763..85a1e0512 100644
  #endif
 
  #include "cairo-gl-ext-def-private.h"
-	EOS
+		EOS
 
-	patch :p1, <<-EOS.undent
+		patch :p0, <<-EOS.undent
 diff --git a/configure.ac b/configure.ac
 index 5ee63a693..ae790d9fb 100644
 --- a/configure.ac
@@ -71,17 +81,9 @@ index 5ee63a693..ae790d9fb 100644
        if test -z "$FREETYPE_CONFIG"; then
          AC_PATH_PROG(FREETYPE_CONFIG, freetype-config, no)
        fi
-	EOS
-  end
+		EOS
+	end
 
-  depends_on "pkg-config" => :build
-  depends_on "freetype"
-  depends_on "fontconfig"
-  depends_on "libpng"
-  depends_on "pixman"
-  depends_on "glib"
-
-  def install
     if build.head?
       ENV["NOCONFIGURE"] = "1"
       system "./autogen.sh"
