@@ -1,7 +1,6 @@
 class Cairo < Formula
   desc "Vector graphics library with cross-device output support"
   homepage "https://cairographics.org/"
-  #url "https://github.com/rozaxe/cairo.git", :using => :git, :tag => "1.15.12"
   url "https://github.com/rozaxe/cairo/archive/1.15.12.tar.gz"
 
   depends_on "pkg-config" => :build
@@ -20,7 +19,6 @@ class Cairo < Formula
     system "./configure", "--disable-dependency-tracking",
                           "--prefix=#{prefix}",
                           "--enable-gobject=yes",
-                          "--enable-gl=yes",
                           "--enable-svg=yes",
                           "--enable-tee=yes",
                           "--enable-quartz-image",
