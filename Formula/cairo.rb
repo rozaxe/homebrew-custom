@@ -19,8 +19,10 @@ class Cairo < Formula
   depends_on "glib"
 
   # Patch OpenGL header for macOS
-  patch :DATA
-  patch :p0, :DATA
+  stable do
+    patch :DATA
+    patch :p0, :DATA
+  end
 
   def install
     if build.head?
