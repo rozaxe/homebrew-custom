@@ -33,6 +33,7 @@ class Cairo < Formula
                           "--enable-xcb=no",
                           "--enable-xlib=no",
                           "--enable-xlib-xrender=no"
+                          "--enable-gl=yes"
     system "make", "install"
   end
 
