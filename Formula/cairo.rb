@@ -9,6 +9,24 @@ class Cairo < Formula
     depends_on "automake" => :build
     depends_on "autoconf" => :build
     depends_on "libtool" => :build
+
+	patch :p0, <<-EOS.undent
+diff --git a/src/cairo-gl-private.h b/src/cairo-gl-private.h
+index f02a58763..85a1e0512 100644
+--- a/src/cairo-gl-private.h
++++ b/src/cairo-gl-private.h
+@@ -67,8 +67,8 @@
+ #include <GLES2/gl2.h>
+ #include <GLES2/gl2ext.h>
+ #elif CAIRO_HAS_GL_SURFACE
+-#include <GL/gl.h>
+-#include <GL/glext.h>
++#include <OpenGL/gl.h>
++#include <OpenGL/glext.h>
+ #endif
+
+ #include "cairo-gl-ext-def-private.h"
+	EOS
   end
 
   depends_on "pkg-config" => :build
