@@ -19,7 +19,64 @@ class Cairo < Formula
   depends_on "glib"
 
   # Patch OpenGL header for macOS
-  patch :p0, <<~EOS
+  patch :DATA
+  patch :p0, :DATA
+
+  def install
+    if build.head?
+      ENV["NOCONFIGURE"] = "1"
+      system "./autogen.sh"
+    end
+
+    system "./configure", "--disable-dependency-tracking",
+                          "--prefix=#{prefix}",
+                          "--enable-gobject=yes",
+                          "--enable-gl=yes",
+                          "--enable-svg=yes",
+                          "--enable-tee=yes",
+                          "--enable-quartz-image",
+                          "--enable-xcb=no",
+                          "--enable-xlib=no",
+                          "--enable-xlib-xrender=no"
+    system "make", "install"
+  end
+
+  test do
+    (testpath/"test.c").write <<~EOS
+      #include <cairo.h>
+
+      int main(int argc, char *argv[]) {
+
+        cairo_surface_t *surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 600, 400);
+        cairo_t *context = cairo_create(surface);
+
+        return 0;
+      }
+    EOS
+    fontconfig = Formula["fontconfig"]
+    freetype = Formula["freetype"]
+    gettext = Formula["gettext"]
+    glib = Formula["glib"]
+    libpng = Formula["libpng"]
+    pixman = Formula["pixman"]
+    flags = %W[
+      -I#{fontconfig.opt_include}
+      -I#{freetype.opt_include}/freetype2
+      -I#{gettext.opt_include}
+      -I#{glib.opt_include}/glib-2.0
+      -I#{glib.opt_lib}/glib-2.0/include
+      -I#{include}/cairo
+      -I#{libpng.opt_include}/libpng16
+      -I#{pixman.opt_include}/pixman-1
+      -L#{lib}
+      -lcairo
+    ]
+    system ENV.cc, "test.c", "-o", "test", *flags
+    system "./test"
+  end
+end
+
+__END__
 diff --git a/configure.ac b/configure.ac
 index 5ee63a693..ae790d9fb 100644
 --- a/configure.ac
@@ -76,58 +133,3 @@ index f02a58763..85a1e0512 100644
  #endif
 
  #include "cairo-gl-ext-def-private.h"
-  EOS
-
-  def install
-    if build.head?
-      ENV["NOCONFIGURE"] = "1"
-      system "./autogen.sh"
-    end
-
-    system "./configure", "--disable-dependency-tracking",
-                          "--prefix=#{prefix}",
-                          "--enable-gobject=yes",
-                          "--enable-gl=yes",
-                          "--enable-svg=yes",
-                          "--enable-tee=yes",
-                          "--enable-quartz-image",
-                          "--enable-xcb=no",
-                          "--enable-xlib=no",
-                          "--enable-xlib-xrender=no"
-    system "make", "install"
-  end
-
-  test do
-    (testpath/"test.c").write <<~EOS
-      #include <cairo.h>
-
-      int main(int argc, char *argv[]) {
-
-        cairo_surface_t *surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 600, 400);
-        cairo_t *context = cairo_create(surface);
-
-        return 0;
-      }
-    EOS
-    fontconfig = Formula["fontconfig"]
-    freetype = Formula["freetype"]
-    gettext = Formula["gettext"]
-    glib = Formula["glib"]
-    libpng = Formula["libpng"]
-    pixman = Formula["pixman"]
-    flags = %W[
-      -I#{fontconfig.opt_include}
-      -I#{freetype.opt_include}/freetype2
-      -I#{gettext.opt_include}
-      -I#{glib.opt_include}/glib-2.0
-      -I#{glib.opt_lib}/glib-2.0/include
-      -I#{include}/cairo
-      -I#{libpng.opt_include}/libpng16
-      -I#{pixman.opt_include}/pixman-1
-      -L#{lib}
-      -lcairo
-    ]
-    system ENV.cc, "test.c", "-o", "test", *flags
-    system "./test"
-  end
-end
