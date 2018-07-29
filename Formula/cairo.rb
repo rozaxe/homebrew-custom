@@ -5,18 +5,7 @@ class Cairo < Formula
   stable do
     url "https://www.cairographics.org/snapshots/cairo-1.15.12.tar.xz"
     sha256 "7623081b94548a47ee6839a7312af34e9322997806948b6eec421a8c6d0594c9"
-
-    # Patch OpenGL header for macOS
-    patch :DATA
-    patch :p0, :DATA
   end
-
-  #head do
-  #  url "https://anongit.freedesktop.org/git/cairo", :using => :git
-  #  depends_on "automake" => :build
-  #  depends_on "autoconf" => :build
-  #  depends_on "libtool" => :build
-  #end
 
   depends_on "pkg-config" => :build
   depends_on "freetype"
@@ -79,28 +68,3 @@ class Cairo < Formula
   end
 end
 
-__END__
---- a/configure.ac
-+++ b/configure.ac
-@@ -356,7 +356,7 @@ CAIRO_ENABLE_SURFACE_BACKEND(gl, OpenGL, no, [
-   gl_REQUIRES="gl"
-   PKG_CHECK_MODULES(gl, $gl_REQUIRES,, [
- 	  dnl Fallback to searching for headers
--	  AC_CHECK_HEADER(GL/gl.h,, [use_gl="no (gl.pc nor OpenGL headers not found)"])
-+	  AC_CHECK_HEADER(OpenGL/gl.h,, [use_gl="no (gl.pc nor OpenGL headers not found)"])
- 	  if test "x$use_gl" = "xyes"; then
- 	      gl_NONPKGCONFIG_CFLAGS=
- 	      gl_NONPKGCONFIG_LIBS="-lGL"
---- a/src/cairo-gl-private.h
-+++ b/src/cairo-gl-private.h
-@@ -67,8 +67,8 @@
- #include <GLES2/gl2.h>
- #include <GLES2/gl2ext.h>
- #elif CAIRO_HAS_GL_SURFACE
--#include <GL/gl.h>
--#include <GL/glext.h>
-+#include <OpenGL/gl.h>
-+#include <OpenGL/glext.h>
- #endif
-
- #include "cairo-gl-ext-def-private.h"
