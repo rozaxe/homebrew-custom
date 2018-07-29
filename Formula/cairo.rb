@@ -1,10 +1,8 @@
 class Cairo < Formula
   desc "Vector graphics library with cross-device output support"
   homepage "https://cairographics.org/"
-
-  stable do
-	url "https://github.com/rozaxe/cairo.git", :using => :git, :tag => "1.15.12"
-  end
+  #url "https://github.com/rozaxe/cairo.git", :using => :git, :tag => "1.15.12"
+  url "https://github.com/rozaxe/cairo/archive/1.15.12.tar.gz"
 
   depends_on "pkg-config" => :build
   depends_on "freetype"
