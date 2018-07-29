@@ -3,7 +3,7 @@ class Cairo < Formula
   homepage "https://cairographics.org/"
 
   stable do
-	url "https://github.com/rozaxe/cairo.git", :using => :git, :tag = "1.15.12"
+	url "https://github.com/rozaxe/cairo.git", :using => :git, :tag => "1.15.12"
   end
 
   depends_on "pkg-config" => :build
