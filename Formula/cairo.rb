@@ -1,7 +1,15 @@
 class Cairo < Formula
   desc "Vector graphics library with cross-device output support"
   homepage "https://cairographics.org/"
-  url "https://github.com/rozaxe/cairo/archive/1.15.12.tar.gz"
+  url "https://www.cairographics.org/snapshots/cairo-1.15.12.tar.xz"
+  sha256 "7623081b94548a47ee6839a7312af34e9322997806948b6eec421a8c6d0594c9"
+
+  head do
+    url "https://anongit.freedesktop.org/git/cairo", :using => :git
+    depends_on "automake" => :build
+    depends_on "autoconf" => :build
+    depends_on "libtool" => :build
+  end
 
   depends_on "pkg-config" => :build
   depends_on "freetype"
@@ -62,4 +70,3 @@ class Cairo < Formula
     system "./test"
   end
 end
-
