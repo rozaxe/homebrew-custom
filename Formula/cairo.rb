@@ -1,15 +1,22 @@
 class Cairo < Formula
   desc "Vector graphics library with cross-device output support"
   homepage "https://cairographics.org/"
-  url "https://www.cairographics.org/snapshots/cairo-1.15.12.tar.xz"
-  sha256 "7623081b94548a47ee6839a7312af34e9322997806948b6eec421a8c6d0594c9"
 
-  head do
-    url "https://anongit.freedesktop.org/git/cairo", :using => :git
-    depends_on "automake" => :build
-    depends_on "autoconf" => :build
-    depends_on "libtool" => :build
+  stable do
+    url "https://www.cairographics.org/snapshots/cairo-1.15.12.tar.xz"
+    sha256 "7623081b94548a47ee6839a7312af34e9322997806948b6eec421a8c6d0594c9"
+
+    # Patch OpenGL header for macOS
+    patch :DATA
+    patch :p0, :DATA
   end
+
+  #head do
+  #  url "https://anongit.freedesktop.org/git/cairo", :using => :git
+  #  depends_on "automake" => :build
+  #  depends_on "autoconf" => :build
+  #  depends_on "libtool" => :build
+  #end
 
   depends_on "pkg-config" => :build
   depends_on "freetype"
@@ -19,11 +26,6 @@ class Cairo < Formula
   depends_on "glib"
 
   def install
-
-    # Patch OpenGL header for macOS
-    patch :DATA
-    patch :p0, :DATA
-
     if build.head?
       ENV["NOCONFIGURE"] = "1"
       system "./autogen.sh"
