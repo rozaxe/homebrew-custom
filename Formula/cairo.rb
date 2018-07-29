@@ -27,13 +27,13 @@ class Cairo < Formula
     system "./configure", "--disable-dependency-tracking",
                           "--prefix=#{prefix}",
                           "--enable-gobject=yes",
+                          "--enable-gl=yes",
                           "--enable-svg=yes",
                           "--enable-tee=yes",
                           "--enable-quartz-image",
                           "--enable-xcb=no",
                           "--enable-xlib=no",
                           "--enable-xlib-xrender=no"
-                          "--enable-gl=yes"
     system "make", "install"
   end
 
