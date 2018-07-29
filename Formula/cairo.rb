@@ -20,24 +20,6 @@ class Cairo < Formula
 
   # Patch OpenGL header for macOS
   patch :p0, <<~EOS
-diff --git a/src/cairo-gl-private.h b/src/cairo-gl-private.h
-index f02a58763..85a1e0512 100644
---- a/src/cairo-gl-private.h
-+++ b/src/cairo-gl-private.h
-@@ -67,8 +67,8 @@
- #include <GLES2/gl2.h>
- #include <GLES2/gl2ext.h>
- #elif CAIRO_HAS_GL_SURFACE
--#include <GL/gl.h>
--#include <GL/glext.h>
-+#include <OpenGL/gl.h>
-+#include <OpenGL/glext.h>
- #endif
-
- #include "cairo-gl-ext-def-private.h"
-  EOS
-
-  patch :p0, <<~EOS
 diff --git a/configure.ac b/configure.ac
 index 5ee63a693..ae790d9fb 100644
 --- a/configure.ac
@@ -79,6 +61,21 @@ index 5ee63a693..ae790d9fb 100644
        if test -z "$FREETYPE_CONFIG"; then
          AC_PATH_PROG(FREETYPE_CONFIG, freetype-config, no)
        fi
+diff --git a/src/cairo-gl-private.h b/src/cairo-gl-private.h
+index f02a58763..85a1e0512 100644
+--- a/src/cairo-gl-private.h
++++ b/src/cairo-gl-private.h
+@@ -67,8 +67,8 @@
+ #include <GLES2/gl2.h>
+ #include <GLES2/gl2ext.h>
+ #elif CAIRO_HAS_GL_SURFACE
+-#include <GL/gl.h>
+-#include <GL/glext.h>
++#include <OpenGL/gl.h>
++#include <OpenGL/glext.h>
+ #endif
+
+ #include "cairo-gl-ext-def-private.h"
   EOS
 
   def install
