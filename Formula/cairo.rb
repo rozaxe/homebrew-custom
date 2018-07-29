@@ -19,7 +19,7 @@ class Cairo < Formula
   depends_on "glib"
 
   # Patch OpenGL header for macOS
-  patch :p0, %{
+  patch :p0, <<-EOS.undent
 diff --git a/src/cairo-gl-private.h b/src/cairo-gl-private.h
 index f02a58763..85a1e0512 100644
 --- a/src/cairo-gl-private.h
@@ -35,9 +35,9 @@ index f02a58763..85a1e0512 100644
  #endif
 
  #include "cairo-gl-ext-def-private.h"
-  }
+  EOS
 
-  patch :p0, %{
+  patch :p0, <<-EOS.undent
 diff --git a/configure.ac b/configure.ac
 index 5ee63a693..ae790d9fb 100644
 --- a/configure.ac
@@ -79,7 +79,7 @@ index 5ee63a693..ae790d9fb 100644
        if test -z "$FREETYPE_CONFIG"; then
          AC_PATH_PROG(FREETYPE_CONFIG, freetype-config, no)
        fi
-  }
+  EOS
 
   def install
     if build.head?
